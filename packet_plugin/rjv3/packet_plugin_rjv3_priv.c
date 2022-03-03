@@ -139,7 +139,7 @@ static void rjv3_set_secondary_dns(char* dns_ascii_buf, char* fake_dns) {
     if (dns_list && dns_list->next) {
         strncpy(dns_ascii_buf, dns_list->next->content, INET6_ADDRSTRLEN);
     } else {
-        PR_WARN("第二 DNS 地址获取错误。若认证失败，请用 --fake-dns2 指定第二 DNS 地址")
+        PR_WARN("第二 DNS 地址获取错误。若认证失败，请用 --fake_dns2 指定第二 DNS 地址")
     }
     free_dns_list(&dns_list);
     return;
@@ -193,7 +193,7 @@ static void rjv3_set_hdd_serial(uint8_t* serial_buf, char* fake_serial) {
     }
 
 info_err:
-    PR_ERRNO("无法从 /etc/mtab 获取根分区挂载设备信息，请使用 --fake-serial 选项手动指定硬盘序列号");
+    PR_ERRNO("无法从 /etc/mtab 获取根分区挂载设备信息，请使用 --fake_serial 选项手动指定硬盘序列号");
 close_return:
     if (_fp != NULL) fclose(_fp);
     if (_root_dev) free(_root_dev);
@@ -234,7 +234,7 @@ static RESULT rjv3_get_dhcp_lease(struct _packet_plugin* this, DHCP_LEASE* lease
     _dns1.family = AF_INET;
     if (!PRIV->fake_dns1) {
         if (IS_FAIL(obtain_dns_list(&_dns_list))) {
-            PR_ERR("主 DNS 地址获取错误，请使用 --fake-dns1 选项手动指定主 DNS 地址");
+            PR_ERR("主 DNS 地址获取错误，请使用 --fake_dns1 选项手动指定主 DNS 地址");
             goto fail;
         }
         _dns1_str = _dns_list->content;
@@ -242,7 +242,7 @@ static RESULT rjv3_get_dhcp_lease(struct _packet_plugin* this, DHCP_LEASE* lease
         _dns1_str = PRIV->fake_dns1;
     }
     if (inet_pton(AF_INET, _dns1_str, &_dns1.ip) == 0) {
-            PR_ERR("主 DNS 地址格式错误，要求 IPv4 地址。请使用 --fake-dns1 选项手动指定主 DNS 地址");
+            PR_ERR("主 DNS 地址格式错误，要求 IPv4 地址。请使用 --fake_dns1 选项手动指定主 DNS 地址");
             goto fail;
     }
 

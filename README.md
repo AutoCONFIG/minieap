@@ -63,7 +63,7 @@ MiniEAP
 * `-p 密码`
 * `-n 网卡名`
 
-默认的网络帧收发模块是 `if_impl_sockraw`。如果要使用其他模块，如 `libpcap`，则必须指定 `--if-impl libpcap`。
+默认的网络帧收发模块是 `if_impl_sockraw`。如果要使用其他模块，如 `libpcap`，则必须指定 `--if_impl libpcap`。
 
 默认不使用任何数据包修改器，将只会发送单纯的标准 EAP 数据包。 **如需使用锐捷认证，则必须指定 `--module rjv3`。** 可以指定多个 `--module` 参数，程序会按参数的顺序让数据包流经这些插件。
 
@@ -77,7 +77,7 @@ MiniEAP
 示例：在 en0 上使用锐捷认证，以 `libpcap` 作为网络帧收发模块，并且在数据包流经锐捷认证插件前后都打印出数据包的大小：
 
 ```
-minieap -u 201000000 -p 15000000000 -n en0 --module printer --module rjv3 --module printer --if-impl libpcap
+minieap -u 201000000 -p 15000000000 -n en0 --module printer --module rjv3 --module printer --if_impl libpcap
 ```
 
 ## 注意事项

@@ -55,14 +55,14 @@ void load_default_params() {
 }
 
 /*
- * Loop on argv to find "--conf-file"
+ * Loop on argv to find "--conf_file"
  */
 RESULT parse_cmdline_conf_file(int argc, char* argv[]) {
     int i = 1;
     for (; i < argc; ++i) {
-        if (strcmp(argv[i], "--conf-file") == 0) {
+        if (strcmp(argv[i], "--conf_file") == 0) {
             if (i + 1 >= argc) {
-                PR_ERR("--conf-file必须有一个参数");
+                PR_ERR("--conf_file必须有一个参数");
                 return FAILURE;
             } else {
                 int _len = strnlen(argv[i + 1], MAX_PATH);
@@ -94,24 +94,24 @@ static void print_cmdline_help() {
         "\t--username, -u <...>\t用户名\n"
         "\t--password, -p <...>\t密码\n"
         "\t--nic, -n <...>\t\t要使用的网络界面名\n"
-        "\t--stage-timeout, -t <num>\t单个认证阶段的超时时间 [默认" STR(DEFAULT_STAGE_TIMEOUT) "]\n"
-        "\t--wait-after-fail, -r <num>\t认证失败后重新认证前的等待时间（但当服务器要求重新认证时将直接开始认证）[默认" STR(DEFAULT_WAIT_AFTER_FAIL_SECS) "]\n"
-        "\t--max-fail, -l <num>\t最大允许认证失败次数 [默认" STR(DEFAULT_MAX_FAILURES) "]\n"
-        "\t--no-auto-reauth, -x\t认证掉线后不允许自动重连 [默认" STR(DEFAULT_RESTART_ON_LOGOFF) "]\n"
+        "\t--stage_timeout, -t <num>\t单个认证阶段的超时时间 [默认" STR(DEFAULT_STAGE_TIMEOUT) "]\n"
+        "\t--wait_after_fail, -r <num>\t认证失败后重新认证前的等待时间（但当服务器要求重新认证时将直接开始认证）[默认" STR(DEFAULT_WAIT_AFTER_FAIL_SECS) "]\n"
+        "\t--max_fail, -l <num>\t最大允许认证失败次数 [默认" STR(DEFAULT_MAX_FAILURES) "]\n"
+        "\t--no_auto_reauth, -x\t认证掉线后不允许自动重连 [默认" STR(DEFAULT_RESTART_ON_LOGOFF) "]\n"
         "\t--daemonize, -b <0-3>\t后台运行方式： [默认0]\n"
             "\t\t\t\t0 = 不后台\n"
             "\t\t\t\t1 = 后台运行，关闭输出\n"
             "\t\t\t\t2 = 后台运行，输出到当前控制台\n"
             "\t\t\t\t3 = 后台运行，输出到日志文件\n"
-        "\t--proxy-lan-iface, -z <...>\t代理认证时的 LAN 网络界面名 [默认无]\n"
-        "\t--auth-round, -j <num>\t需要认证的次数 [默认1]\n"
-        "\t--max-retries <num>\t最大超时重试的次数 [默认3]\n"
-        "\t--pid-file <...>\tPID 文件路径，设为none可禁用 [默认" DEFAULT_PIDFILE "]\n"
-        "\t--conf-file <...>\t配置文件路径 [默认" DEFAULT_CONFFILE "]\n"
-        "\t--if-impl <...>\t\t选择此网络操作模块，仅允许选择一次 [默认为第一个可用的模块]\n"
-        "\t--pkt-plugin <...>\t启用此名称的数据包修改器，可启用多次、多个 [默认无]\n"
+        "\t--proxy_lan_iface, -z <...>\t代理认证时的 LAN 网络界面名 [默认无]\n"
+        "\t--auth_round, -j <num>\t需要认证的次数 [默认1]\n"
+        "\t--max_retries <num>\t最大超时重试的次数 [默认3]\n"
+        "\t--pid_file <...>\tPID 文件路径，设为none可禁用 [默认" DEFAULT_PIDFILE "]\n"
+        "\t--conf_file <...>\t配置文件路径 [默认" DEFAULT_CONFFILE "]\n"
+        "\t--if_impl <...>\t\t选择此网络操作模块，仅允许选择一次 [默认为第一个可用的模块]\n"
+        "\t--pkt_plugin <...>\t启用此名称的数据包修改器，可启用多次、多个 [默认无]\n"
         "\t--module <...>\t\t同上\n"
-            "\t\t\t\t当命令行选项中存在 --module 或 --pkt-plugin 时，配置文件中的所有 module= 行都将被忽略\n"
+            "\t\t\t\t当命令行选项中存在 --module 或 --pkt_plugin 时，配置文件中的所有 module= 行都将被忽略\n"
     );
 
     print_if_impl_list();
@@ -138,23 +138,23 @@ static void parse_one_opt(const char* option, const char* argument) {
         COPY_N_ARG_TO(g_prog_config.ifname, IFNAMSIZ);
     } else if (ISOPT("daemonize")) {
         g_prog_config.daemon_type = atoi(argument) % 4;
-    } else if (ISOPT("pkt-plugin") || ISOPT("module")) {
+    } else if (ISOPT("pkt_plugin") || ISOPT("module")) {
         insert_data(&g_prog_config.packet_plugin_list, (void*)argument);
-    } else if (ISOPT("if-impl")) {
+    } else if (ISOPT("if_impl")) {
         COPY_N_ARG_TO(g_prog_config.if_impl, IFNAMSIZ);
     } else if (ISOPT("save")) {
         g_prog_config.save_now = 1;
     } else if (ISOPT("help")) {
         print_cmdline_help(); /* 调用本函数将退出程序 */
-    } else if (ISOPT("max-fail")) {
+    } else if (ISOPT("max_fail")) {
         g_prog_config.max_failures = atoi(argument);
-    } else if (ISOPT("max-retries")) {
+    } else if (ISOPT("max_retries")) {
         g_prog_config.max_retries = atoi(argument);
-    } else if (ISOPT("no-auto-reauth")) {
+    } else if (ISOPT("no_auto_reauth")) {
         g_prog_config.restart_on_logoff = 0;
-    } else if (ISOPT("wait-after-fail")) {
+    } else if (ISOPT("wait_after_fail")) {
         g_prog_config.wait_after_fail_secs = atoi(argument);
-    } else if (ISOPT("stage-timeout")) {
+    } else if (ISOPT("stage_timeout")) {
         g_prog_config.stage_timeout = atoi(argument);
     } else if (ISOPT("kill")) {
         if (strcmp(argument, "0") == 0)
@@ -165,14 +165,14 @@ static void parse_one_opt(const char* option, const char* argument) {
             g_prog_config.kill_type = KILL_AND_START;
         else if(strcmp(argument, "3") == 0)
             g_prog_config.kill_type = GO_ON;/* 执行多个进程以支持多账号多拨 */
-    } else if (ISOPT("proxy-lan-iface")) {
+    } else if (ISOPT("proxy_lan_iface")) {
         g_proxy_config.proxy_on = 1;
         COPY_N_ARG_TO(g_proxy_config.lan_ifname, IFNAMSIZ);
-    } else if (ISOPT("auth-round")) {
+    } else if (ISOPT("auth_round")) {
         g_prog_config.auth_round = atoi(argument);
-    } else if (ISOPT("pid-file")) {
+    } else if (ISOPT("pid_file")) {
         COPY_N_ARG_TO(g_prog_config.pidfile, MAX_PATH);
-    } else if (ISOPT("log-file")) {
+    } else if (ISOPT("log_file")) {
         COPY_N_ARG_TO(g_prog_config.logfile, MAX_PATH);
     }
 }
@@ -189,19 +189,19 @@ RESULT parse_cmdline_opts(int argc, char* argv[]) {
 	    { "username", required_argument, NULL, 'u' },
 	    { "password", required_argument, NULL, 'p' },
 	    { "nic", required_argument, NULL, 'n' },
-	    { "stage-timeout", required_argument, NULL, 't' },
-	    { "wait-after-fail", required_argument, NULL, 'r' },
-	    { "max-fail", required_argument, NULL, 'l' },
-	    { "no-auto-reauth", no_argument, NULL, 'x' },
+	    { "stage_timeout", required_argument, NULL, 't' },
+	    { "wait_after_fail", required_argument, NULL, 'r' },
+	    { "max_fail", required_argument, NULL, 'l' },
+	    { "no_auto_reauth", no_argument, NULL, 'x' },
 	    { "daemonize", required_argument, NULL, 'b' },
-	    { "proxy-lan-iface", required_argument, NULL, 'z' },
-	    { "auth-round", required_argument, NULL, 'j' },
-	    { "max-retries", required_argument, NULL, 0},
-	    { "pid-file", required_argument, NULL, 0},
-	    { "if-impl", required_argument, NULL, 0},
-	    { "pkt-plugin", required_argument, NULL, 0},
+	    { "proxy_lan_iface", required_argument, NULL, 'z' },
+	    { "auth_round", required_argument, NULL, 'j' },
+	    { "max_retries", required_argument, NULL, 0},
+	    { "pid_file", required_argument, NULL, 0},
+	    { "if_impl", required_argument, NULL, 0},
+	    { "pkt_plugin", required_argument, NULL, 0},
 	    { "module", required_argument, NULL, 0},
-	    { "log-file", required_argument, NULL, 0},
+	    { "log_file", required_argument, NULL, 0},
 	    { NULL, no_argument, NULL, 0 }
     };
 
@@ -214,7 +214,7 @@ RESULT parse_cmdline_opts(int argc, char* argv[]) {
                 break;
             case 0:
                 if ((strcmp(longOpts[longIndex].name, "module") == 0 ||
-                    strcmp(longOpts[longIndex].name, "pkt-plugin") == 0)
+                    strcmp(longOpts[longIndex].name, "pkt_plugin") == 0)
                     && cmd_module_list_reset == FALSE) {
                     /* When there is at least one "--module" provided on the cmdline,
                        give up all the plugins read from config file.
@@ -243,7 +243,7 @@ RESULT parse_cmdline_opts(int argc, char* argv[]) {
 
 static void parser_traverser(CONFIG_PAIR* pair, void* unused) {
     if (pair->value[0] == 0) {
-        return; /* Refuse options without value. At least there should be no-auto-reauth=1 */
+        return; /* Refuse options without value. At least there should be no_auto_reauth=1 */
     }
     parse_one_opt(pair->key, pair->value);
 }
@@ -265,16 +265,16 @@ RESULT save_config_file() {
     conf_parser_add_value("nic", g_prog_config.ifname);
     save_active_packet_plugin_list();
     conf_parser_add_value("daemonize", my_itoa(g_prog_config.daemon_type, itoa_buf, 10));
-    conf_parser_add_value("if-impl", get_if_impl()->name);
-    conf_parser_add_value("max-fail", my_itoa(g_prog_config.max_failures, itoa_buf, 10));
-    conf_parser_add_value("max-retries", my_itoa(g_prog_config.max_retries, itoa_buf, 10));
-    conf_parser_add_value("no-auto-reauth", g_prog_config.restart_on_logoff ? "0" : "1");
-    conf_parser_add_value("wait-after-fail", my_itoa(g_prog_config.wait_after_fail_secs, itoa_buf, 10));
-    conf_parser_add_value("stage-timeout", my_itoa(g_prog_config.stage_timeout, itoa_buf, 10));
-    conf_parser_add_value("proxy-lan-iface", g_proxy_config.lan_ifname);
-    conf_parser_add_value("auth-round", my_itoa(g_prog_config.auth_round, itoa_buf, 10));
-    conf_parser_add_value("pid-file", g_prog_config.pidfile);
-    conf_parser_add_value("log-file", g_prog_config.logfile);
+    conf_parser_add_value("if_impl", get_if_impl()->name);
+    conf_parser_add_value("max_fail", my_itoa(g_prog_config.max_failures, itoa_buf, 10));
+    conf_parser_add_value("max_retries", my_itoa(g_prog_config.max_retries, itoa_buf, 10));
+    conf_parser_add_value("no_auto_reauth", g_prog_config.restart_on_logoff ? "0" : "1");
+    conf_parser_add_value("wait_after_fail", my_itoa(g_prog_config.wait_after_fail_secs, itoa_buf, 10));
+    conf_parser_add_value("stage_timeout", my_itoa(g_prog_config.stage_timeout, itoa_buf, 10));
+    conf_parser_add_value("proxy_lan_iface", g_proxy_config.lan_ifname);
+    conf_parser_add_value("auth_round", my_itoa(g_prog_config.auth_round, itoa_buf, 10));
+    conf_parser_add_value("pid_file", g_prog_config.pidfile);
+    conf_parser_add_value("log_file", g_prog_config.logfile);
     packet_plugin_save_config();
     return conf_parser_save_file();
 }
