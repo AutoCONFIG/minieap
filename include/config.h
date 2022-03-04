@@ -84,7 +84,7 @@ typedef struct _prog_config {
      * but cmdline opts may override it.
      */
     char* logfile;
-    #define DEFAULT_LOGFILE "/var/log/minieap.log"
+    #define DEFAULT_LOGFILE "/tmp/minieap.log"
 
     /*
      * Selected interface implementation: how to drive network adapters?
