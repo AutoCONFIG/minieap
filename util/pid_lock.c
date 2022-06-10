@@ -38,8 +38,11 @@ RESULT pid_lock_init(const char* pidfile) {
 // Return FAILURE: We could not handle, or we do not want to proceed
 static RESULT pid_lock_handle_multiple_instance() {
     char readbuf[PID_STRING_BUFFER_SIZE]; // 12 is big enough to hold PID number
-
-    if (read(pid_lock_fd, readbuf, PID_STRING_BUFFER_SIZE) < 0 || readbuf[0] == '\0') {
+    
+    if (get_program_config()->kill_type == KILL_ROLLED) {
+        PR_ERRNO("已进入 MiniEAP 多开模式");
+        return SUCCESS;
+    } else if (read(pid_lock_fd, readbuf, PID_STRING_BUFFER_SIZE) < 0 || readbuf[0] == '\0') {
         PR_ERRNO("已有另一个 MiniEAP 进程正在运行但 PID 未知，请手动结束其他 MiniEAP 进程");
         return FAILURE;
     } else {
@@ -55,9 +58,6 @@ static RESULT pid_lock_handle_multiple_instance() {
             case KILL_AND_START:
                 PR_WARN("已有另一个 MiniEAP 进程正在运行，PID 为 %d，将在发送终止信号后继续……", pid);
                 kill(pid, SIGTERM);
-                return SUCCESS;
-            case GO_ON:
-                PR_INFO("当前 MiniEAP 已允许多进程");
                 return SUCCESS;
             default:
                 PR_ERR("-k 参数未知");
