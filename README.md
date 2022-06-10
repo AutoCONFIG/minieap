@@ -3,12 +3,7 @@ MiniEAP
 
 这是一个实现了标准 EAP-MD5-Challenge 算法的 EAP 客户端，支持通过插件来修改标准数据包以通过特殊服务端的认证。目前带有一个实现锐捷 v3 (v4) 算法的插件。本插件的认证算法来自 [Hu Yunrui 的 MentoHUST 项目](https://github.com/hyrathb/mentohust)，在此表示感谢！
 
-## Taiga版本特性
-此版继Kana版本开发，主要更新算法部分，支持RG-SU For Linux 1.31的算法，目前不完善，还在小范围测试中
-
-版本号大于0.96.7
-
-### OpenWRT交叉编译请前往 https://github.com/ZenZRyan/minieap-openwrt
+### OpenWRT交叉编译请前往 https://github.com/AutoCONFIG/minieap-openwrt
 
 ## 特性
 
