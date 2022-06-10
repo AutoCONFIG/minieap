@@ -37,8 +37,8 @@ typedef enum _kill_type {
     KILL_ONLY,
     /* Kill others and start */
     KILL_AND_START,
-    /*Don't kill others for multiple-wan-connection*/
-    GO_ON
+    /* Do not kill anyone for multi open */
+    KILL_ROLLED
 } KILL_TYPE;
 
 typedef enum _daemon_type {

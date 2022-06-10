@@ -164,7 +164,7 @@ static void parse_one_opt(const char* option, const char* argument) {
         else if(strcmp(argument, "2") == 0)
             g_prog_config.kill_type = KILL_AND_START;
         else if(strcmp(argument, "3") == 0)
-            g_prog_config.kill_type = GO_ON;/* 执行多个进程以支持多账号多拨 */
+            g_prog_config.kill_type = KILL_ROLLED;/* 执行多个进程以支持多账号多拨 */
     } else if (ISOPT("proxy_lan_iface")) {
         g_proxy_config.proxy_on = 1;
         COPY_N_ARG_TO(g_proxy_config.lan_ifname, IFNAMSIZ);
