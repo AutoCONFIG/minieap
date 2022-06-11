@@ -59,9 +59,6 @@ static RESULT pid_lock_handle_multiple_instance() {
                 PR_WARN("已有另一个 MiniEAP 进程正在运行，PID 为 %d，将在发送终止信号后继续……", pid);
                 kill(pid, SIGTERM);
                 return SUCCESS;
-            case GO_ON:
-                PR_INFO("当前 MiniEAP 已允许多进程");
-                return SUCCESS;
             default:
                 PR_ERR("-k 参数未知");
                 return FAILURE;
