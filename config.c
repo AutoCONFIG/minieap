@@ -85,7 +85,7 @@ static void print_cmdline_help() {
     PR_RAW("\n以下选项中，[]表示可选参数，<>表示必选参数。\n\n");
     PR_RAW(
         "\t--help, -h\t显示本帮助\n"
-        "\t-k [默认0]\tMiniEAP进程运行方式\n"
+        "\t-k [默认0]\tMiniEAP 进程运行方式\n"
             "\t\t\t0 = 不终止其他 MiniEAP 进程，并退出当前 MiniEAP 进程\n"
             "\t\t\t1 = 终止其他 MiniEAP 进程，并退出当前 MiniEAP 进程\n"
             "\t\t\t2 = 终止其他 MiniEAP 进程，并继续当前 MiniEAP 进程\n"
