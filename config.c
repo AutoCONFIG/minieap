@@ -89,7 +89,7 @@ static void print_cmdline_help() {
             "\t\t\t0 = 不终止其他 MiniEAP 进程，并退出当前 MiniEAP 进程\n"
             "\t\t\t1 = 终止其他 MiniEAP 进程，并退出当前 MiniEAP 进程\n"
             "\t\t\t2 = 终止其他 MiniEAP 进程，并继续当前 MiniEAP 进程\n"
-            "\t\t\t3 = 允许多 MiniEAP 进程（多号多拨适用，需配合多网卡，当前为测试功能）\n"
+            "\t\t\t3 = 允许多 MiniEAP 多进程（多拨适用）\n"
         "\t--save, -w\t保存本次认证所用参数\n"
         "\t--username, -u <...>\t用户名\n"
         "\t--password, -p <...>\t密码\n"
