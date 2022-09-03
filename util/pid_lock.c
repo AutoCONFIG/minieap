@@ -43,7 +43,7 @@ static RESULT pid_lock_handle_multiple_instance() {
         PR_INFO("已进入 MiniEAP 多开模式");
         return SUCCESS;
     } else if (read(pid_lock_fd, readbuf, PID_STRING_BUFFER_SIZE) < 0 || readbuf[0] == '\0') {
-        PR_ERRNO("已有另一个未知 PID 的 MiniEAP 进程正在运行，请手动退出 MiniEAP 进程");
+        PR_ERRNO("已有另一个 MiniEAP 进程正在运行但 PID 未知，请手动结束其他 MiniEAP 进程");
         return FAILURE;
     } else {
         int pid = atoi(readbuf);
